@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <navigation-rule>
+        <from-view-id>/odabirUredjaja.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{odabirUredjaja.upisiSoap()}</from-action>
+            <from-outcome>upisano_soap</from-outcome>
+            <to-view-id>/odabirUredjaja.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{odabirUredjaja.upisiRest()}</from-action>
+            <from-outcome>upisano_rest</from-outcome>
+            <to-view-id>/odabirUredjaja.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{odabirUredjaja.preuzmiSoap()}</from-action>
+            <from-outcome>preuzeto_soap</from-outcome>
+            <to-view-id>/odabirUredjaja.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{odabirUredjaja.preuzmiRest()}</from-action>
+            <from-outcome>preuzeto_rest</from-outcome>
+            <to-view-id>/odabirUredjaja.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

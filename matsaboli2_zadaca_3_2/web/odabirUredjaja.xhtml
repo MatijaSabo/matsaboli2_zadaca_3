@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Odabir uredjaja</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+        <h:outputScript library="js" name="app.js" />
+    </h:head>
+    <h:body>
+        <div class="container" >
+            <div class="jumbotron">
+                <h1>NWTiS Zadaća 3</h1>
+                <h3>Opis zadatka: Sustav aplikacija s korištenjem web servisa openweathermap.org i Google Maps API</h3>
+                <h4>Autor: Matija Sabolić</h4>
+            </div>
+            <h:form>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><h:outputText value="Novi uređaj" /></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <h:outputLabel value="Naziv: " for="naziv" />
+                            <h:inputText id="naziv" value="#{odabirUredjaja.naziv}" class="form-control" onchange="upis()" />
+
+                            <h:outputLabel value="Adresa: " for="adresa" />
+                            <h:inputText id="adresa" value="#{odabirUredjaja.adresa}" class="form-control" onchange="upis()" />
+
+                            <br />
+                            <div class="btn-toolbar">
+                                <h:commandButton id="upisi_soap" value="Upiši SOAP" action="#{odabirUredjaja.upisiSoap()}" class="btn" disabled="disabled" />
+                                <h:commandButton id="upisi_rest" value="Upuši REST" action="#{odabirUredjaja.upisiRest()}" class="btn" disabled="disabled" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><h:outputText value="Odabir uređaja" /></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <h:outputLabel for="uredaji" value="Uređaji" />
+                            <h:selectManyListbox id="uredaji" value="#{odabirUredjaja.odabraniUredjaji}" size="7" class="form-control" onchange="preuzimanje()" >
+                                <f:selectItems value="#{odabirUredjaja.uredjaji}" 
+                                               var="u"
+                                               itemLabel="#{u.naziv}"
+                                               itemValue="#{u.id}">
+                                </f:selectItems>
+                            </h:selectManyListbox>
+                            <br />
+
+                            <div class="col-md-4">
+                                <h:outputLabel value="Vrijeme od: " for="vrijeme_od" />
+                                <p:calendar id="vrijeme_od" value="#{odabirUredjaja.vrijeme_od}" pattern="yyyy-MM-dd HH:mm:ss" >
+                                    <p:ajax event="change" oncomplete="preuzimanje()" />
+                                    <p:ajax event="dateSelect" oncomplete="preuzimanje()" />
+                                </p:calendar> 
+                            </div>
+                            <div class="col-md-4">
+                                <h:outputLabel value="Vrijeme do: " for="vrijeme_do" />
+                                <p:calendar id="vrijeme_do" value="#{odabirUredjaja.vrijeme_do}" pattern="yyyy-MM-dd HH:mm:ss" >
+                                    <p:ajax event="change" oncomplete="preuzimanje()" />
+                                    <p:ajax event="dateSelect" oncomplete="preuzimanje()" />
+                                </p:calendar>   
+                            </div>
+
+                            <div class="btn-toolbar">
+                                <h:commandButton id="preuzmi_soap" value="Preuzmi SOAP" action="#{odabirUredjaja.preuzmiSoap()}" class="btn" disabled="disabled" />
+                                <h:commandButton id="preuzmi_rest" value="Preuzmi REST" action="#{odabirUredjaja.preuzmiRest()}" class="btn" disabled="disabled" />
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><h:outputText value="Meteo podaci" /></h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:dataTable value="#{odabirUredjaja.meteoPodaci}" var="podatak" class="table table-hover">
+                            <h:column>
+                                <f:facet name="header">Temperatura</f:facet>
+                                <h:outputText value="#{podatak.temperatureValue}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Tlak</f:facet>
+                                <h:outputText value="#{podatak.pressureValue}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Vlaga</f:facet>
+                                <h:outputText value="#{podatak.humidityValue}" />
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
+            </h:form>
+            <div class="well">
+                <p> &reg; Napredne Web tehnlogije i servisi 2017.</p>
+            </div>
+        </div>
+    </h:body>
+</html>
+

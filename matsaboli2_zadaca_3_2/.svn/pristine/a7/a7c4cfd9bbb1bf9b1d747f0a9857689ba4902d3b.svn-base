@@ -1,0 +1,46 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.foi.nwtis.matsaboli2.web.zrna;
+
+import java.util.List;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
+import org.foi.nwtis.matsaboli2.ws.serveri.Uredjaj;
+
+/**
+ *
+ * @author grupa_1
+ */
+@Named(value = "odabirUredjaja")
+@RequestScoped
+public class OdabirUredjaja {
+    
+    List<Uredjaj> uredjaji;
+    String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Uredjaj> getUredjaji() {
+        return uredjaji;
+    }
+
+    public void setUredjaji(List<Uredjaj> uredjaji) {
+        this.uredjaji = uredjaji;
+    }
+
+    /**
+     * Creates a new instance of OdabirUredjaja
+     */
+    public OdabirUredjaja() {
+    }
+    
+}
