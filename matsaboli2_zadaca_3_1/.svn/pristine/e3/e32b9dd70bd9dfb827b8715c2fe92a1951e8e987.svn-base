@@ -1,0 +1,94 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.foi.nwtis.matsaboli2.rest.serveri;
+
+import java.util.ArrayList;
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.core.MediaType;
+import org.foi.nwtis.matsaboli2.web.podaci.Lokacija;
+import org.foi.nwtis.matsaboli2.web.podaci.Uredjaj;
+
+/**
+ * REST Web Service
+ *
+ * @author grupa_1
+ */
+public class MeteoRESTResource {
+
+    private String id;
+
+    /**
+     * Creates a new instance of MeteoRESTResource
+     */
+    private MeteoRESTResource(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Get instance of the MeteoRESTResource
+     */
+    public static MeteoRESTResource getInstance(String id) {
+        // The user may use some kind of persistence mechanism
+        // to store and restore instances of MeteoRESTResource class.
+        return new MeteoRESTResource(id);
+    }
+
+    /**
+     * Retrieves representation of an instance of
+     * org.foi.nwtis.matsaboli2.rest.serveri.MeteoRESTResource
+     *
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getJson() {
+        ArrayList<Uredjaj> uredjaji = new ArrayList<Uredjaj>();
+        int i = 0;
+
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+
+        JsonObjectBuilder job = Json.createObjectBuilder();
+
+        for (Uredjaj u : uredjaji) {
+            if (u.getUid() == Long.parseLong(this.id)) {
+                job.add("ID", u.getUid());
+                job.add("Naziv", u.getNaziv());
+                job.add("Longitude", u.getGeoloc().getLongitude());
+                job.add("Latitude", u.getGeoloc().getLatitude());
+                break;
+            }
+        }
+
+        return job.build().toString();
+    }
+
+    /**
+     * PUT method for updating or creating an instance of MeteoRESTResource
+     *
+     * @param content representation for the resource
+     */
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void putJson(String content) {
+    }
+
+    /**
+     * DELETE method for resource MeteoRESTResource
+     */
+    @DELETE
+    public void delete() {
+    }
+}

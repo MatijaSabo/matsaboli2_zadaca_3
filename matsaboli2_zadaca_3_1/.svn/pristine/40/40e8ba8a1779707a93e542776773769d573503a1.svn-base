@@ -1,0 +1,67 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.foi.nwtis.matsaboli2.ws.serveri;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import org.foi.nwtis.matsaboli2.web.podaci.Lokacija;
+import org.foi.nwtis.matsaboli2.web.podaci.MeteoPodaci;
+import org.foi.nwtis.matsaboli2.web.podaci.Uredjaj;
+
+/**
+ *
+ * @author grupa_1
+ */
+@WebService(serviceName = "GeoMeteoWS")
+public class GeoMeteoWS {
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "dajSveUredjaje")
+    public java.util.List<Uredjaj> dajSveUredjaje() {
+        ArrayList<Uredjaj> uredjaji = new ArrayList<Uredjaj>();
+        int i = 0;
+        
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        uredjaji.add(new Uredjaj(i++, "IoT" + i, new Lokacija("123", "123")));
+        
+        return uredjaji;
+    }
+    
+    //http://localhost:8084/matsaboli2_zadaca_3_1/GeoMeteoWS?wsdl
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "dodajUredjaj")
+    public Boolean dodajUredjaj(@WebParam(name = "uredjaj") Uredjaj uredjaj) {
+        //TODO write your implementation code here:
+        return true;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "dajSveMeteoPodatkeZaUredjaj")
+    public List<MeteoPodaci> dajSveMeteoPodatkeZaUredjaj(@WebParam(name = "id") int id, @WebParam(name = "od") long od, @WebParam(name = "parameter1") long parameter1) {
+        //TODO write your implementation code here:
+        List<MeteoPodaci> lista = new ArrayList<>();
+        lista.add(new MeteoPodaci(new Date(), new Date(), 19.7f, 22.0f, 10.0f, "C", 55.0f, "%", 1050.2f, "hPa", 0.0f, "", 0.0f, "", "", 5, "sivo nebo", "ok", 0.0f, "", "mm/m2", 7, "ok", "", new Date()));
+        lista.add(new MeteoPodaci(new Date(), new Date(), 19.7f, 22.0f, 10.0f, "C", 55.0f, "%", 1050.2f, "hPa", 0.0f, "", 0.0f, "", "", 5, "sivo nebo", "ok", 0.0f, "", "mm/m2", 7, "ok", "", new Date()));
+        lista.add(new MeteoPodaci(new Date(), new Date(), 19.7f, 22.0f, 10.0f, "C", 55.0f, "%", 1050.2f, "hPa", 0.0f, "", 0.0f, "", "", 5, "sivo nebo", "ok", 0.0f, "", "mm/m2", 7, "ok", "", new Date()));
+        lista.add(new MeteoPodaci(new Date(), new Date(), 19.7f, 22.0f, 10.0f, "C", 55.0f, "%", 1050.2f, "hPa", 0.0f, "", 0.0f, "", "", 5, "sivo nebo", "ok", 0.0f, "", "mm/m2", 7, "ok", "", new Date()));
+        lista.add(new MeteoPodaci(new Date(), new Date(), 19.7f, 22.0f, 10.0f, "C", 55.0f, "%", 1050.2f, "hPa", 0.0f, "", 0.0f, "", "", 5, "sivo nebo", "ok", 0.0f, "", "mm/m2", 7, "ok", "", new Date()));
+        return lista;
+    }
+}

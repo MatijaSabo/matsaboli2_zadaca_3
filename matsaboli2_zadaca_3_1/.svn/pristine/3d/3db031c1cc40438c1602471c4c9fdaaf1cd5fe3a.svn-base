@@ -1,0 +1,25 @@
+<%-- 
+    Document   : index
+    Created on : Apr 25, 2017, 4:19:58 PM
+    Author     : grupa_1
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <h1>Unos IoT uređaja</h1>
+        <form action="${pageContext.servletContext.contextPath}/DodajUredjaj" method="POST">
+            <label for="naziv">Naziv i adresa: </label>
+            <input id="naziv" type="text" name="naziv" />
+            <input id="adresa" type="text" name="adresa" />
+            <input type="submit" name="button" value="Geo lokacija" /><br>
+            <input type="submit" name="button" value="Spremi" /><br>
+            <input type="submit" name="button" value="Meteo podaci" /><br>    
+        </form>
+    </body>
+</html>

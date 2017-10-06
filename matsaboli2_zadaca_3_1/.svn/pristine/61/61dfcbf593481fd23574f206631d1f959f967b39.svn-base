@@ -1,0 +1,136 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.foi.nwtis.matsaboli2.web;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.foi.nwtis.matsaboli2.rest.klijenti.GMKlijent;
+import org.foi.nwtis.matsaboli2.rest.klijenti.OWMKlijent;
+import org.foi.nwtis.matsaboli2.web.podaci.Lokacija;
+import org.foi.nwtis.matsaboli2.web.podaci.MeteoPodaci;
+
+/**
+ *
+ * @author grupa_1
+ */
+@WebServlet(name = "DodajUredjaj", urlPatterns = {"/DodajUredjaj"})
+public class DodajUredjaj extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //dohvatiti naziv i adresu, utvrditi koji je gumb pritisnut
+
+        String naziv;
+        String adresa;
+        String akcija = "meteoPodaci";
+
+        naziv = request.getParameter("naziv");
+        adresa = request.getParameter("adresa");
+        //akcija = request.getParameter("button");
+
+        switch (akcija) {
+            case "geoLokacija":
+                geoLokacija(naziv, adresa);
+                break;
+            case "spremi":
+                spremiLokaciju(naziv, adresa);
+                break;
+            case "meteoPodaci":
+                meteoPodaci(naziv, adresa);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+    private void geoLokacija(String naziv, String adresa) {
+        GMKlijent gmClient = new GMKlijent();
+        Lokacija l = gmClient.getGeoLocation(adresa);
+        System.out.println("Adresa: " +  adresa);
+        System.out.println("Latitude: " + l.getLatitude());
+        System.out.println("Longitude: " + l.getLongitude());
+        System.out.println("----------------------------------------------------");
+        //todo spremi lokaciju
+        //ispiši podatke u index.jsp
+    }
+
+    private void spremiLokaciju(String naziv, String adresa) {
+        //upiši uređaj u bazu podataka
+    }
+
+    private void meteoPodaci(String naziv, String adresa) {
+        //todo preuzmi apikey iz konfiguracijskih podataka
+        String apikey = "165ed06ad0bd8f40128adfc7af6917ac";
+        OWMKlijent owmClient = new OWMKlijent(apikey);
+        String lat = "46.3076267";
+        String longitude = "16.3382566";
+        MeteoPodaci mp = owmClient.getRealTimeWeather(lat, longitude);
+        String temp = mp.getTemperatureValue().toString();
+        String vlaga = mp.getHumidityValue().toString();
+        String tlak = mp.getPressureValue().toString();
+        
+        System.out.println("Temperatura: " + temp);
+        System.out.println("Vlaga: " + vlaga);
+        System.out.println("Tlak: " + tlak);
+    }
+
+}
